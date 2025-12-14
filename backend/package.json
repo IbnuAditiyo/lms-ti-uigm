@@ -28,7 +28,7 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "migrate:prod": "node scripts/migrate.js",
     "seed": "node scripts/seed-database.js",
-    "seed:dev": "ts-node src/database/seeds/initial-seeder.ts",
+    "seed:dev": "ts-node src/database/seeds/seed.ts",
     "seed:prod": "node scripts/seed-database.js",
     "db:reset": "npm run schema:drop && npm run migration:run && npm run seed",
     "db:fresh": "npm run schema:drop && npm run seed",
