@@ -21,12 +21,16 @@ async function seed() {
 
     // Clear existing data
     console.log('🧹 Clearing existing data...');
-    await announcementRepository.delete({});
-    await materialRepository.delete({});
-    await assignmentRepository.delete({});
+    // Gunakan delete() via QueryBuilder untuk menghapus semua data tanpa error
+    await announcementRepository.createQueryBuilder().delete().execute();
+    await materialRepository.createQueryBuilder().delete().execute();
+    await assignmentRepository.createQueryBuilder().delete().execute();
+    
+    // Hapus tabel relasi (junction table) manual
     await AppDataSource.query('DELETE FROM course_enrollments');
-    await courseRepository.delete({});
-    await userRepository.delete({});
+    
+    await courseRepository.createQueryBuilder().delete().execute();
+    await userRepository.createQueryBuilder().delete().execute();
 
     // Create admin user
     console.log('👨‍💼 Creating admin user...');
