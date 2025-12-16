@@ -127,15 +127,7 @@ const LoginPage: React.FC = () => {
             {isSubmitting ? 'Sedang masuk...' : 'Masuk'}
           </Button>
 
-          {/* Demo credentials */}
-          <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-            <h3 className="text-sm font-medium text-blue-900 mb-2">Demo Akun:</h3>
-            <div className="text-xs text-blue-800 space-y-1">
-              <p><strong>Admin:</strong> adminti@uigm.ac.id / admin123</p>
-              <p><strong>Dosen:</strong> rendra@uigm.ac.id / lecturer123</p>
-              <p><strong>Mahasiswa:</strong> 2022110081@students.uigm.ac.id / student123</p>
-            </div>
-          </div>
+          
         </form>
       </div>
     </div>

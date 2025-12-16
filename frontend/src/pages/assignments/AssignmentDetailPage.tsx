@@ -46,6 +46,7 @@ const AssignmentDetailPage: React.FC = () => {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
   
   // Student submission states
   const [submissionContent, setSubmissionContent] = useState('');
@@ -243,6 +244,32 @@ const AssignmentDetailPage: React.FC = () => {
     return true;
   };
 
+  // ✅ CEK HAK AKSES: Admin atau Dosen
+  const canManageAssignment = () => {
+    if (!user || !assignment) return false;
+    return user.role === UserRole.ADMIN || user.role === UserRole.LECTURER;
+  };
+
+  // ✅ HANDLE EDIT
+  const handleEditAssignment = () => {
+    navigate(`/assignments/${assignmentId}/edit`);
+  };
+
+  // ✅ HANDLE HAPUS
+  const handleDeleteAssignment = async () => {
+    if (!window.confirm('Yakin ingin menghapus tugas ini? Data yang dihapus tidak bisa kembali.')) {
+      return;
+    }
+    try {
+      setDeleting(true);
+      await assignmentService.deleteAssignment(assignmentId!);
+      navigate('/assignments');
+    } catch (err: any) {
+      alert(err.response?.data?.message || 'Gagal menghapus tugas');
+      setDeleting(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -278,6 +305,31 @@ const AssignmentDetailPage: React.FC = () => {
           </p>
         </div>
       </div>
+
+      {canManageAssignment() && (
+          <div className="flex gap-2">
+            <Button 
+              variant="outline" 
+              onClick={handleEditAssignment}
+              className="flex items-center"
+            >
+              <EditIcon className="w-4 h-4 mr-2" />
+              Edit
+            </Button>
+            <Button 
+              onClick={handleDeleteAssignment}
+              disabled={deleting}
+              className="bg-red-600 hover:bg-red-700 text-white flex items-center"
+            >
+              {deleting ? (
+                <Loader size="small" className="mr-2" />
+              ) : (
+                <TrashIcon className="w-4 h-4 mr-2" />
+              )}
+              Hapus
+            </Button>
+          </div>
+        )}
 
       {/* Assignment Details */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
