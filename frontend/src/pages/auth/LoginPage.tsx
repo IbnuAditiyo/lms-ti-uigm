@@ -6,7 +6,6 @@ import { useAuth } from '../../contexts/AuthContext';
 import { LoginRequest } from '../../types';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
-import { toast } from 'react-toastify';
 
 const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +27,6 @@ const LoginPage: React.FC = () => {
       navigate(from, { replace: true });
     } catch (error: any) {
       console.error('Login failed:', error);
-      // Error handling is done in the auth context
     }
   };
 
@@ -36,9 +34,28 @@ const LoginPage: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-primary-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <div className="mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-primary-100 ring-4 ring-white">
-            <AcademicCapIcon className="h-8 w-8 text-primary-600" />
+          {/* --- BAGIAN INI SAJA YANG DIUBAH (ICON -> LOGO IMAGE) --- */}
+          <div className="mx-auto flex justify-center">
+            {/* Pastikan file 'logo-univ.png' ada di folder public */}
+            <img 
+              src="/logo-univ.png" 
+              alt="Logo Universitas" 
+              className="h-24 w-auto object-contain hover:scale-105 transition-transform duration-300"
+              onError={(e) => {
+                // Fallback ke Icon jika gambar tidak ditemukan
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                e.currentTarget.nextElementSibling?.classList.add('flex');
+              }}
+            />
+            
+            {/* Fallback Icon (Disembunyikan jika gambar ada) */}
+            <div className="hidden mx-auto h-20 w-20 items-center justify-center rounded-full bg-primary-100 ring-4 ring-white shadow-lg">
+              <AcademicCapIcon className="h-10 w-10 text-primary-600" />
+            </div>
           </div>
+          {/* --- BATAS PERUBAHAN --- */}
+
           <h2 className="mt-6 text-center text-3xl font-extrabold text-primary-900">
             Masuk ke LMS TI UIGM
           </h2>
@@ -127,7 +144,6 @@ const LoginPage: React.FC = () => {
             {isSubmitting ? 'Sedang masuk...' : 'Masuk'}
           </Button>
 
-          
         </form>
       </div>
     </div>

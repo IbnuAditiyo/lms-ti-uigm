@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
-import {
+import { 
+  XMarkIcon,
   HomeIcon,
   BookOpenIcon,
   DocumentTextIcon,
@@ -9,6 +9,7 @@ import {
   UsersIcon,
   CogIcon,
   AcademicCapIcon,
+  ArrowRightOnRectangleIcon
 } from '@heroicons/react/24/outline';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -47,7 +48,7 @@ const navigation: NavigationItem[] = [
     name: 'Forum Diskusi',
     href: '/forums',
     icon: ChatBubbleLeftRightIcon,
-    roles: [UserRole.STUDENT, UserRole.LECTURER], // Hidden from admin
+    roles: [UserRole.STUDENT, UserRole.LECTURER],
   },
 ];
 
@@ -74,7 +75,7 @@ const adminNavigation: NavigationItem[] = [
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const location = useLocation();
-  const { user } = useAuth();
+  const { user } = useAuth(); // Pastikan ada fungsi logout dari context
 
   const isActiveLink = (href: string) => {
     if (href === '/dashboard') {
@@ -90,92 +91,113 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-white">
-      {/* Logo - Deep Emerald Gradient */}
-      <div className="flex items-center justify-center h-16 px-4 bg-gradient-to-r from-primary-800 to-primary-900 shadow-md">
-        <div className="flex items-center">
-          <div className="p-2 bg-white bg-opacity-10 rounded-lg border border-white/20">
-            <AcademicCapIcon className="h-6 w-6 text-secondary-200" />
+      {/* --- BRANDING HEADER (LOGO PRODI) --- */}
+      <div className="flex flex-col items-center justify-center py-8 px-4 border-b border-gray-100 bg-white">
+        <Link to="/dashboard" className="flex flex-col items-center gap-3 group">
+          
+          {/* Container Logo - Ganti Image di sini */}
+          <div className="flex items-center justify-center w-20 h-20 transition-transform duration-300 transform group-hover:scale-105">
+            {/* Pastikan file 'logo-prodi.png' ada di folder public */}
+            <img 
+              src="/logo-prodi.png" 
+              alt="Logo Teknik Informatika" 
+              className="w-full h-full object-contain filter drop-shadow-sm"
+              onError={(e) => {
+                // Fallback kalau gambar tidak ditemukan, balik ke ikon
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.nextElementSibling?.classList.remove('hidden');
+              }}
+            />
+            {/* Fallback Icon (Hidden by default) */}
+            <div className="hidden w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-600 to-primary-800 items-center justify-center shadow-lg">
+               <AcademicCapIcon className="h-8 w-8 text-white" />
+            </div>
           </div>
-          <span className="ml-3 text-lg font-bold text-white hidden lg:block tracking-wide">
-            LMS Universitas
-          </span>
-        </div>
+          
+          {/* Text Branding - Center Alignment */}
+          <div className="flex flex-col items-center text-center">
+            <span className="text-base font-bold text-gray-900 leading-tight">
+              Teknik Informatika
+            </span>
+            <span className="text-xs font-semibold text-secondary-600 uppercase tracking-wide mt-1">
+              Universitas IGM
+            </span>
+          </div>
+        </Link>
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto scrollbar-thin">
-        {/* Main Navigation */}
-        <div className="space-y-1">
-          {navigation.map((item) => {
-            if (!canAccessItem(item)) return null;
-            
-            return (
-              <Link
-                key={item.name}
-                to={item.href}
-                onClick={onClose}
-                className={`${
-                  isActiveLink(item.href)
-                    ? 'bg-primary-50 border-r-3 border-secondary-500 text-primary-900 shadow-sm'
-                    : 'text-gray-600 hover:bg-primary-50/50 hover:text-primary-800'
-                } group flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-all duration-200 ease-in-out`}
-              >
-                <item.icon
-                  className={`${
-                    isActiveLink(item.href)
-                      ? 'text-secondary-600' // Gold Icon when active
-                      : 'text-gray-400 group-hover:text-primary-600'
-                  } flex-shrink-0 mr-3 h-5 w-5 transition-colors`}
-                />
-                <span className="truncate">{item.name}</span>
-                {isActiveLink(item.href) && (
-                  <div className="ml-auto w-1.5 h-1.5 bg-secondary-500 rounded-full"></div>
-                )}
-              </Link>
-            );
-          })}
+      {/* --- NAVIGATION CONTENT --- */}
+      <nav className="flex-1 px-4 py-6 space-y-6 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200">
+        
+        {/* Menu Utama */}
+        <div>
+          <div className="px-3 mb-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
+            Menu Utama
+          </div>
+          <div className="space-y-1">
+            {navigation.map((item) => {
+              if (!canAccessItem(item)) return null;
+              const active = isActiveLink(item.href);
+              
+              return (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  onClick={onClose}
+                  className={`group flex items-center px-3 py-2.5 text-sm font-medium rounded-xl transition-all duration-200 ${
+                    active
+                      ? 'bg-primary-50 text-primary-700 shadow-sm ring-1 ring-primary-100'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  }`}
+                >
+                  <item.icon
+                    className={`flex-shrink-0 mr-3 h-5 w-5 transition-colors duration-200 ${
+                      active ? 'text-primary-600' : 'text-gray-400 group-hover:text-primary-500'
+                    }`}
+                  />
+                  <span className="flex-1">{item.name}</span>
+                  {active && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-secondary-500 shadow-sm" />
+                  )}
+                </Link>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Admin Navigation */}
+        {/* Admin Menu Section */}
         {user?.role === UserRole.ADMIN && (
-          <div className="pt-6">
-            <div className="px-3 mb-3">
-              <h3 className="text-xs font-semibold text-secondary-700 uppercase tracking-wider">
-                Administrasi
-              </h3>
-              <div className="mt-2 w-8 h-0.5 bg-secondary-300 rounded-full"></div>
+          <div>
+            <div className="px-3 mb-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
+              Administrator
             </div>
-            
             <div className="space-y-1">
               {adminNavigation.map((section) => {
                 if (!canAccessItem(section)) return null;
-                
                 return (
-                  <div key={section.name}>
-                    {section.children?.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.href}
-                        onClick={onClose}
-                        className={`${
-                          isActiveLink(item.href)
-                            ? 'bg-primary-50 border-r-3 border-secondary-500 text-primary-900 shadow-sm'
-                            : 'text-gray-600 hover:bg-primary-50/50 hover:text-primary-800'
-                        } group flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-all duration-200 ease-in-out`}
-                      >
-                        <item.icon
-                          className={`${
-                            isActiveLink(item.href)
-                              ? 'text-secondary-600'
-                              : 'text-gray-400 group-hover:text-primary-600'
-                          } flex-shrink-0 mr-3 h-5 w-5 transition-colors`}
-                        />
-                        <span className="truncate">{item.name}</span>
-                        {isActiveLink(item.href) && (
-                          <div className="ml-auto w-1.5 h-1.5 bg-secondary-500 rounded-full"></div>
-                        )}
-                      </Link>
-                    ))}
+                  <div key={section.name} className="space-y-1">
+                    {section.children?.map((item) => {
+                      const active = isActiveLink(item.href);
+                      return (
+                        <Link
+                          key={item.name}
+                          to={item.href}
+                          onClick={onClose}
+                          className={`group flex items-center px-3 py-2.5 text-sm font-medium rounded-xl transition-all duration-200 ${
+                            active
+                              ? 'bg-primary-50 text-primary-700 shadow-sm ring-1 ring-primary-100'
+                              : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                          }`}
+                        >
+                          <item.icon
+                            className={`flex-shrink-0 mr-3 h-5 w-5 transition-colors duration-200 ${
+                              active ? 'text-primary-600' : 'text-gray-400 group-hover:text-primary-500'
+                            }`}
+                          />
+                          {item.name}
+                        </Link>
+                      );
+                    })}
                   </div>
                 );
               })}
@@ -184,35 +206,36 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         )}
       </nav>
 
-      {/* User Info Card */}
-      <div className="flex-shrink-0 p-4 border-t border-gray-200 bg-gray-50/50">
-        <div className="flex items-center p-3 bg-white rounded-lg shadow-sm border border-gray-200 group hover:border-primary-200 transition-colors">
+      {/* --- FOOTER USER INFO --- */}
+      <div className="p-4 border-t border-gray-100 bg-gray-50/50">
+        <div className="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm ring-1 ring-gray-100">
           <div className="flex-shrink-0">
             {user?.avatar ? (
               <img
-                className="h-10 w-10 rounded-full ring-2 ring-secondary-200"
+                className="h-9 w-9 rounded-full object-cover ring-2 ring-white shadow-sm"
                 src={user.avatar}
                 alt={user.fullName}
               />
             ) : (
-              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary-700 to-primary-900 flex items-center justify-center shadow-inner ring-2 ring-secondary-200">
-                <span className="text-sm font-semibold text-secondary-100">
-                  {user?.fullName?.charAt(0)}
-                </span>
+              <div className="h-9 w-9 rounded-full bg-gradient-to-br from-secondary-400 to-secondary-600 flex items-center justify-center text-white shadow-sm font-bold text-xs ring-2 ring-white">
+                {user?.fullName?.charAt(0)}
               </div>
             )}
           </div>
-          <div className="ml-3 min-w-0 flex-1 hidden lg:block">
-            <p className="text-sm font-medium text-gray-900 truncate">
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold text-gray-900 truncate">
               {user?.fullName}
             </p>
-            <div className="text-xs text-gray-500 flex items-center mt-1">
-              <div className="w-2 h-2 bg-secondary-500 rounded-full mr-2"></div>
-              {user?.role === UserRole.STUDENT && 'Mahasiswa'}
-              {user?.role === UserRole.LECTURER && 'Dosen'}
-              {user?.role === UserRole.ADMIN && 'Administrator'}
-            </div>
+            <p className="text-xs text-gray-500 truncate capitalize">
+              {user?.role?.toLowerCase()}
+            </p>
           </div>
+          <button
+            onClick={() => console.log('Logout clicked')}
+            className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+          >
+            <ArrowRightOnRectangleIcon className="h-5 w-5" />
+          </button>
         </div>
       </div>
     </div>
@@ -220,7 +243,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
   return (
     <>
-      {/* Mobile sidebar */}
+      {/* Mobile sidebar overlay */}
       <Transition.Root show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-50 md:hidden" onClose={onClose}>
           <Transition.Child
@@ -232,8 +255,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            {/* Dark Emerald Overlay */}
-            <div className="fixed inset-0 bg-primary-950 bg-opacity-80 backdrop-blur-sm" />
+            <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm" />
           </Transition.Child>
 
           <div className="fixed inset-0 flex z-50">
@@ -246,7 +268,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-white shadow-xl">
+              <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-white">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-in-out duration-300"
@@ -259,7 +281,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   <div className="absolute top-0 right-0 -mr-12 pt-2">
                     <button
                       type="button"
-                      className="ml-1 flex h-10 w-10 items-center justify-center rounded-full bg-primary-900 bg-opacity-50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-inset focus:ring-secondary-400 transition-all"
+                      className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                       onClick={onClose}
                     >
                       <span className="sr-only">Close sidebar</span>
@@ -267,7 +289,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     </button>
                   </div>
                 </Transition.Child>
-                
                 <SidebarContent />
               </Dialog.Panel>
             </Transition.Child>
@@ -277,7 +298,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
       {/* Desktop sidebar */}
       <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 z-30">
-        <div className="flex flex-col flex-grow border-r border-gray-200 shadow-lg overflow-hidden">
+        <div className="flex flex-col flex-grow border-r border-gray-200 bg-white shadow-xl shadow-gray-200/50">
           <SidebarContent />
         </div>
       </div>
