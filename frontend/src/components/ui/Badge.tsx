@@ -23,13 +23,26 @@ export const Badge: React.FC<BadgeProps> = ({
   };
   
   const variants = {
+    // Default: Neutral Gray (No Change)
     default: 'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-500',
+    
+    // Success: Green (Standard Semantic)
     success: 'bg-green-100 text-green-800 hover:bg-green-200 focus:ring-green-500',
-    warning: 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200 focus:ring-yellow-500',
+    
+    // Warning: Mapped to Gold (Secondary)
+    warning: 'bg-secondary-100 text-secondary-900 hover:bg-secondary-200 focus:ring-secondary-500',
+    
+    // Error: Red (Standard Semantic)
     error: 'bg-red-100 text-red-800 hover:bg-red-200 focus:ring-red-500',
-    info: 'bg-blue-100 text-blue-800 hover:bg-blue-200 focus:ring-blue-500',
-    outline: 'border border-gray-300 text-gray-700 bg-transparent hover:bg-gray-50 focus:ring-gray-500',
-    secondary: 'bg-gray-500 text-white hover:bg-gray-600 focus:ring-gray-500',
+    
+    // Info: Mapped to Emerald (Primary) for Brand Identity
+    info: 'bg-primary-100 text-primary-900 hover:bg-primary-200 focus:ring-primary-500',
+    
+    // Outline: Emerald Border
+    outline: 'border border-primary-200 text-primary-700 bg-transparent hover:bg-primary-50 focus:ring-primary-500',
+    
+    // Secondary: Solid Gold High Contrast
+    secondary: 'bg-secondary-500 text-white hover:bg-secondary-600 focus:ring-secondary-500',
   };
 
   return (

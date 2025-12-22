@@ -10,7 +10,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-50">
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       
@@ -29,6 +29,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
           </div>
         </main>
+
+        {/* Footer Sederhana & Modern (Opsional) */}
+        <footer className="px-10 py-8 border-t border-slate-100">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-xs font-medium text-slate-400">
+              © {new Date().getFullYear()} Universitas Indo Global Mandiri. All rights reserved.
+            </p>
+            <div className="flex items-center gap-6">
+              <a href="#" className="text-xs font-bold text-slate-400 hover:text-primary-600 transition-colors">Bantuan</a>
+              <a href="#" className="text-xs font-bold text-slate-400 hover:text-primary-600 transition-colors">Kebijakan Privasi</a>
+            </div>
+          </div>
+        </footer>
+
       </div>
     </div>
   );

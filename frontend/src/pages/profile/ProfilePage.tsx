@@ -5,7 +5,7 @@ const ProfilePage: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-900">Profil Saya</h1>
+        <h1 className="text-2xl font-bold text-primary-900">Profil Saya</h1>
       </div>
       
       <Card>
@@ -14,7 +14,7 @@ const ProfilePage: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="text-center py-8">
-            <p className="text-gray-500">Halaman profil sedang dalam pengembangan...</p>
+            <p className="text-secondary-600">Halaman profil sedang dalam pengembangan...</p>
           </div>
         </CardContent>
       </Card>

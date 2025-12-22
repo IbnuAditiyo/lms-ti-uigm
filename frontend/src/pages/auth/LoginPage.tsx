@@ -33,13 +33,13 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-primary-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <div className="mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-primary-100">
+          <div className="mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-primary-100 ring-4 ring-white">
             <AcademicCapIcon className="h-8 w-8 text-primary-600" />
           </div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-primary-900">
             Masuk ke LMS TI UIGM
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
@@ -87,9 +87,9 @@ const LoginPage: React.FC = () => {
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-                  <EyeSlashIcon className="h-5 w-5 text-gray-400" />
+                  <EyeSlashIcon className="h-5 w-5 text-gray-400 hover:text-secondary-600 transition-colors" />
                 ) : (
-                  <EyeIcon className="h-5 w-5 text-gray-400" />
+                  <EyeIcon className="h-5 w-5 text-gray-400 hover:text-secondary-600 transition-colors" />
                 )}
               </button>
             </div>
@@ -101,7 +101,7 @@ const LoginPage: React.FC = () => {
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded cursor-pointer"
               />
               <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                 Ingat saya
@@ -111,7 +111,7 @@ const LoginPage: React.FC = () => {
             <div className="text-sm">
               <Link
                 to="/forgot-password"
-                className="font-medium text-primary-600 hover:text-primary-500"
+                className="font-medium text-primary-600 hover:text-secondary-600 transition-colors"
               >
                 Lupa password?
               </Link>
@@ -121,7 +121,7 @@ const LoginPage: React.FC = () => {
           <Button
             type="submit"
             size="lg"
-            className="w-full"
+            className="w-full shadow-lg shadow-primary-500/20"
             disabled={isSubmitting}
           >
             {isSubmitting ? 'Sedang masuk...' : 'Masuk'}

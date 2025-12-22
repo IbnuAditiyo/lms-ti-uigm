@@ -11,7 +11,7 @@ const DashboardPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-96">
+      <div className="flex items-center justify-center h-96 bg-gray-50">
         <LoadingSpinner size="lg" />
       </div>
     );
@@ -32,7 +32,7 @@ const DashboardPage: React.FC = () => {
     default:
       return (
         <div className="text-center py-12">
-          <h2 className="text-xl font-semibold text-gray-900">Role tidak dikenali</h2>
+          <h2 className="text-xl font-semibold text-primary-900">Role tidak dikenali</h2>
           <p className="mt-2 text-gray-600">Silakan hubungi administrator</p>
         </div>
       );

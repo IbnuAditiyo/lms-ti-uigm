@@ -90,20 +90,20 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-white">
-      {/* Logo */}
-      <div className="flex items-center justify-center h-16 px-4 bg-gradient-to-r from-primary-600 to-primary-700 shadow-lg">
+      {/* Logo - Deep Emerald Gradient */}
+      <div className="flex items-center justify-center h-16 px-4 bg-gradient-to-r from-primary-800 to-primary-900 shadow-md">
         <div className="flex items-center">
-          <div className="p-2 bg-white bg-opacity-20 rounded-lg">
-            <AcademicCapIcon className="h-6 w-6 text-white" />
+          <div className="p-2 bg-white bg-opacity-10 rounded-lg border border-white/20">
+            <AcademicCapIcon className="h-6 w-6 text-secondary-200" />
           </div>
-          <span className="ml-3 text-lg font-bold text-white hidden lg:block">
+          <span className="ml-3 text-lg font-bold text-white hidden lg:block tracking-wide">
             LMS Universitas
           </span>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
+      <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto scrollbar-thin">
         {/* Main Navigation */}
         <div className="space-y-1">
           {navigation.map((item) => {
@@ -116,20 +116,20 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 onClick={onClose}
                 className={`${
                   isActiveLink(item.href)
-                    ? 'bg-primary-50 border-r-3 border-primary-500 text-primary-700 shadow-sm'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                    ? 'bg-primary-50 border-r-3 border-secondary-500 text-primary-900 shadow-sm'
+                    : 'text-gray-600 hover:bg-primary-50/50 hover:text-primary-800'
                 } group flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-all duration-200 ease-in-out`}
               >
                 <item.icon
                   className={`${
                     isActiveLink(item.href)
-                      ? 'text-primary-500'
-                      : 'text-gray-400 group-hover:text-gray-500'
+                      ? 'text-secondary-600' // Gold Icon when active
+                      : 'text-gray-400 group-hover:text-primary-600'
                   } flex-shrink-0 mr-3 h-5 w-5 transition-colors`}
                 />
                 <span className="truncate">{item.name}</span>
                 {isActiveLink(item.href) && (
-                  <div className="ml-auto w-1.5 h-1.5 bg-primary-500 rounded-full"></div>
+                  <div className="ml-auto w-1.5 h-1.5 bg-secondary-500 rounded-full"></div>
                 )}
               </Link>
             );
@@ -140,10 +140,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         {user?.role === UserRole.ADMIN && (
           <div className="pt-6">
             <div className="px-3 mb-3">
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              <h3 className="text-xs font-semibold text-secondary-700 uppercase tracking-wider">
                 Administrasi
               </h3>
-              <div className="mt-2 w-8 h-0.5 bg-primary-200 rounded-full"></div>
+              <div className="mt-2 w-8 h-0.5 bg-secondary-300 rounded-full"></div>
             </div>
             
             <div className="space-y-1">
@@ -159,20 +159,20 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                         onClick={onClose}
                         className={`${
                           isActiveLink(item.href)
-                            ? 'bg-primary-50 border-r-3 border-primary-500 text-primary-700 shadow-sm'
-                            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                            ? 'bg-primary-50 border-r-3 border-secondary-500 text-primary-900 shadow-sm'
+                            : 'text-gray-600 hover:bg-primary-50/50 hover:text-primary-800'
                         } group flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-all duration-200 ease-in-out`}
                       >
                         <item.icon
                           className={`${
                             isActiveLink(item.href)
-                              ? 'text-primary-500'
-                              : 'text-gray-400 group-hover:text-gray-500'
+                              ? 'text-secondary-600'
+                              : 'text-gray-400 group-hover:text-primary-600'
                           } flex-shrink-0 mr-3 h-5 w-5 transition-colors`}
                         />
                         <span className="truncate">{item.name}</span>
                         {isActiveLink(item.href) && (
-                          <div className="ml-auto w-1.5 h-1.5 bg-primary-500 rounded-full"></div>
+                          <div className="ml-auto w-1.5 h-1.5 bg-secondary-500 rounded-full"></div>
                         )}
                       </Link>
                     ))}
@@ -185,18 +185,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       </nav>
 
       {/* User Info Card */}
-      <div className="flex-shrink-0 p-4 border-t border-gray-100 bg-gray-50">
-        <div className="flex items-center p-3 bg-white rounded-lg shadow-sm border border-gray-200">
+      <div className="flex-shrink-0 p-4 border-t border-gray-200 bg-gray-50/50">
+        <div className="flex items-center p-3 bg-white rounded-lg shadow-sm border border-gray-200 group hover:border-primary-200 transition-colors">
           <div className="flex-shrink-0">
             {user?.avatar ? (
               <img
-                className="h-10 w-10 rounded-full ring-2 ring-primary-100"
+                className="h-10 w-10 rounded-full ring-2 ring-secondary-200"
                 src={user.avatar}
                 alt={user.fullName}
               />
             ) : (
-              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center shadow-inner">
-                <span className="text-sm font-semibold text-white">
+              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary-700 to-primary-900 flex items-center justify-center shadow-inner ring-2 ring-secondary-200">
+                <span className="text-sm font-semibold text-secondary-100">
                   {user?.fullName?.charAt(0)}
                 </span>
               </div>
@@ -206,12 +206,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             <p className="text-sm font-medium text-gray-900 truncate">
               {user?.fullName}
             </p>
-            <p className="text-xs text-gray-500 flex items-center mt-1">
-              <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+            <div className="text-xs text-gray-500 flex items-center mt-1">
+              <div className="w-2 h-2 bg-secondary-500 rounded-full mr-2"></div>
               {user?.role === UserRole.STUDENT && 'Mahasiswa'}
               {user?.role === UserRole.LECTURER && 'Dosen'}
               {user?.role === UserRole.ADMIN && 'Administrator'}
-            </p>
+            </div>
           </div>
         </div>
       </div>
@@ -232,7 +232,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-gray-600 bg-opacity-75 backdrop-blur-sm" />
+            {/* Dark Emerald Overlay */}
+            <div className="fixed inset-0 bg-primary-950 bg-opacity-80 backdrop-blur-sm" />
           </Transition.Child>
 
           <div className="fixed inset-0 flex z-50">
@@ -258,7 +259,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   <div className="absolute top-0 right-0 -mr-12 pt-2">
                     <button
                       type="button"
-                      className="ml-1 flex h-10 w-10 items-center justify-center rounded-full bg-black bg-opacity-20 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition-all"
+                      className="ml-1 flex h-10 w-10 items-center justify-center rounded-full bg-primary-900 bg-opacity-50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-inset focus:ring-secondary-400 transition-all"
                       onClick={onClose}
                     >
                       <span className="sr-only">Close sidebar</span>

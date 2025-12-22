@@ -40,23 +40,23 @@ export const Modal: React.FC<ModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Backdrop */}
+      {/* Backdrop - Dark Emerald Tint with Blur */}
       <div 
-        className="fixed inset-0 bg-black bg-opacity-50"
+        className="fixed inset-0 bg-primary-950 bg-opacity-60 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
       
       {/* Modal */}
       <div className={cn(
-        'relative bg-white rounded-lg shadow-xl w-full mx-4',
+        'relative bg-white rounded-lg shadow-2xl border border-gray-200 w-full mx-4',
         sizes[size]
       )}>
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+        <div className="flex items-center justify-between p-6 border-b border-gray-100">
+          <h2 className="text-lg font-semibold text-primary-900">{title}</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-gray-400 hover:text-secondary-600 hover:bg-secondary-50 rounded-md p-1 transition-colors focus:outline-none focus:ring-2 focus:ring-secondary-500"
           >
             <X className="w-5 h-5" />
           </button>

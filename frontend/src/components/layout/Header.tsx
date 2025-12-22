@@ -42,7 +42,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
         <div className="flex items-center">
           <button
             onClick={onMenuClick}
-            className="md:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 transition-colors"
+            className="md:hidden p-2 rounded-md text-gray-400 hover:text-primary-600 hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-secondary-500 transition-colors"
           >
             <Bars3Icon className="h-6 w-6" />
           </button>
@@ -62,11 +62,11 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
           <Menu as="div" className="relative">
             <Menu.Button
               onClick={() => setShowNotifications(!showNotifications)}
-              className="relative p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+              className="relative p-2 text-gray-400 hover:text-secondary-600 hover:bg-secondary-50 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-500 transition-colors"
             >
               <BellIcon className="h-6 w-6" />
               {unreadCount && unreadCount.unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-medium">
+                <span className="absolute -top-1 -right-1 h-5 w-5 bg-secondary-600 text-white text-xs rounded-full flex items-center justify-center font-medium shadow-sm">
                   {unreadCount.unreadCount > 9 ? '9+' : unreadCount.unreadCount}
                 </span>
               )}
@@ -93,14 +93,14 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
                       <p className="text-sm text-gray-500">Tidak ada notifikasi baru</p>
                     </div>
                   ) : (
-                    <div className="space-y-2 max-h-64 overflow-y-auto">
+                    <div className="space-y-2 max-h-64 overflow-y-auto scrollbar-thin">
                       {notifications?.data?.slice(0, 5).map((notification) => (
                         <div
                           key={notification.id}
                           className={`p-3 rounded-md text-sm border transition-colors ${
                             notification.isRead 
                               ? 'bg-gray-50 border-gray-200' 
-                              : 'bg-blue-50 border-blue-200'
+                              : 'bg-primary-50 border-primary-200'
                           }`}
                         >
                           <p className="font-medium text-gray-900">
@@ -117,7 +117,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
                   <div className="mt-3 pt-3 border-t border-gray-200">
                     <Link
                       to="/notifications"
-                      className="text-sm text-primary-600 hover:text-primary-500 font-medium transition-colors"
+                      className="text-sm text-primary-600 hover:text-primary-700 font-medium transition-colors"
                       onClick={() => setShowNotifications(false)}
                     >
                       Lihat semua notifikasi →
@@ -130,17 +130,17 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
           {/* User menu */}
           <Menu as="div" className="relative">
-            <Menu.Button className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
+            <Menu.Button className="flex items-center space-x-3 p-2 rounded-lg hover:bg-secondary-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-500 transition-colors">
               <div className="flex-shrink-0">
                 {user?.avatar ? (
                   <img
-                    className="h-8 w-8 rounded-full ring-2 ring-gray-200"
+                    className="h-8 w-8 rounded-full ring-2 ring-secondary-200"
                     src={user.avatar}
                     alt={user.fullName}
                   />
                 ) : (
-                  <div className="h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center">
-                    <span className="text-sm font-medium text-primary-600">
+                  <div className="h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center ring-2 ring-secondary-200">
+                    <span className="text-sm font-medium text-primary-700">
                       {user?.fullName?.charAt(0)}
                     </span>
                   </div>
@@ -171,9 +171,9 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
                     {({ active }) => (
                       <Link
                         to="/profile"
-                        className={`${active ? 'bg-gray-100' : ''} flex items-center px-4 py-2 text-sm text-gray-700 transition-colors`}
+                        className={`${active ? 'bg-primary-50 text-primary-700' : 'text-gray-700'} flex items-center px-4 py-2 text-sm transition-colors`}
                       >
-                        <UserCircleIcon className="mr-3 h-5 w-5 text-gray-400" />
+                        <UserCircleIcon className={`mr-3 h-5 w-5 ${active ? 'text-secondary-500' : 'text-secondary-400'}`} />
                         Profil Saya
                       </Link>
                     )}
@@ -183,9 +183,9 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
                     {({ active }) => (
                       <Link
                         to="/settings"
-                        className={`${active ? 'bg-gray-100' : ''} flex items-center px-4 py-2 text-sm text-gray-700 transition-colors`}
+                        className={`${active ? 'bg-primary-50 text-primary-700' : 'text-gray-700'} flex items-center px-4 py-2 text-sm transition-colors`}
                       >
-                        <Cog6ToothIcon className="mr-3 h-5 w-5 text-gray-400" />
+                        <Cog6ToothIcon className={`mr-3 h-5 w-5 ${active ? 'text-secondary-500' : 'text-secondary-400'}`} />
                         Pengaturan
                       </Link>
                     )}
@@ -197,9 +197,9 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
                     {({ active }) => (
                       <button
                         onClick={logout}
-                        className={`${active ? 'bg-gray-100' : ''} flex items-center w-full px-4 py-2 text-sm text-gray-700 transition-colors`}
+                        className={`${active ? 'bg-primary-50 text-primary-700' : 'text-gray-700'} flex items-center w-full px-4 py-2 text-sm transition-colors`}
                       >
-                        <ArrowRightOnRectangleIcon className="mr-3 h-5 w-5 text-gray-400" />
+                        <ArrowRightOnRectangleIcon className={`mr-3 h-5 w-5 ${active ? 'text-secondary-500' : 'text-secondary-400'}`} />
                         Keluar
                       </button>
                     )}

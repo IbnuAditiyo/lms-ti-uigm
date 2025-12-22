@@ -34,7 +34,7 @@ export interface CardDescriptionProps {
 export const Card: React.FC<CardProps> = ({ children, className = '', onClick }) => {
   return (
     <div 
-      className={`card ${className}`} 
+      className={`card bg-white border border-gray-200 transition-colors ${onClick ? 'hover:border-primary-300 hover:shadow-md' : 'hover:border-primary-200'} ${className}`} 
       onClick={onClick}
       style={onClick ? { cursor: 'pointer' } : {}}
     >
@@ -56,7 +56,7 @@ export const CardTitle: React.FC<CardTitleProps> = ({
   className = '' 
 }) => {
   return (
-    <h3 className={`card-title ${className}`}>
+    <h3 className={`card-title text-primary-900 ${className}`}>
       {children}
     </h3>
   );
@@ -67,7 +67,7 @@ export const CardDescription: React.FC<CardDescriptionProps> = ({
   className = '' 
 }) => {
   return (
-    <p className={`card-description ${className}`}>
+    <p className={`card-description text-gray-500 ${className}`}>
       {children}
     </p>
   );
@@ -83,7 +83,7 @@ export const CardContent: React.FC<CardContentProps> = ({ children, className = 
 
 export const CardFooter: React.FC<CardFooterProps> = ({ children, className = '' }) => {
   return (
-    <div className={`card-footer ${className}`}>
+    <div className={`card-footer border-t border-gray-100 ${className}`}>
       {children}
     </div>
   );
