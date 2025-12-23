@@ -43,10 +43,11 @@ const EnhancedLecturerDashboard: React.FC = () => {
       setCurrentTime(new Date());
     }, 1000);
 
-    // Set greeting based on time
+    // Logic Penentu Salam (Pagi/Siang/Sore/Malam)
     const hour = new Date().getHours();
-    if (hour < 12) setGreeting('Selamat Pagi');
-    else if (hour < 17) setGreeting('Selamat Siang');
+    if (hour < 11) setGreeting('Selamat Pagi');
+    else if (hour >= 11 && hour < 15) setGreeting('Selamat Siang');
+    else if (hour >= 15 && hour < 18) setGreeting('Selamat Sore');
     else setGreeting('Selamat Malam');
 
     return () => clearInterval(timer);
@@ -217,7 +218,7 @@ const EnhancedLecturerDashboard: React.FC = () => {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              {greeting}, Prof! 👋
+              {greeting}, Bapak/Ibu Dosen! 👋
             </h1>
             <p className="text-gray-600 text-lg">
               {formatDate(currentTime)} • {formatTime(currentTime)}
