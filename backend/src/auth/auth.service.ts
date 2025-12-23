@@ -25,7 +25,8 @@ export class AuthService {
   async validateUser(email: string, password: string): Promise<User | null> {
     const user = await this.userRepository.findOne({ 
       where: { email },
-      select: ['id', 'email', 'password', 'fullName', 'role', 'isActive']
+      // 👇 TAMBAHAN: 'createdAt' ditambahkan di sini agar diambil dari database
+      select: ['id', 'email', 'password', 'fullName', 'role', 'isActive', 'createdAt']
     });
 
     if (user && user.isActive && await bcrypt.compare(password, user.password)) {
@@ -60,6 +61,7 @@ export class AuthService {
         role: user.role,
         studentId: user.studentId,
         lecturerId: user.lecturerId,
+        createdAt: user.createdAt, // 👇 TAMBAHAN: sertakan ini agar frontend menerimanya
       },
     };
   }

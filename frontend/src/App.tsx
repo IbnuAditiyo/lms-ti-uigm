@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { PublicRoute } from './components/PublicRoute';
+import NotificationsPage from './pages/notifications/NotificationsPage';
 
 // Pages
 import LoginPage from './pages/auth/LoginPage';
@@ -78,6 +79,7 @@ function App() {
                         <Route path="/forums/create" element={<CreateForumPostPage />} />
                         <Route path="/forums/:id" element={<ForumDetailPage />} />
                         
+                        <Route path="/notifications" element={<NotificationsPage />} />
                         <Route path="/profile" element={<ProfilePage />} />
                         
                         {/* Admin Dashboard Route */}

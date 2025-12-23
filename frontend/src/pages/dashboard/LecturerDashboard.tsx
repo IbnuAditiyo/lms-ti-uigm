@@ -6,17 +6,11 @@ import {
   UserGroupIcon, 
   ClipboardDocumentCheckIcon,
   ChartBarIcon,
-  PlusIcon,
-  BellIcon,
   EyeIcon,
   CalendarDaysIcon,
   ClockIcon,
   AcademicCapIcon,
   DocumentTextIcon,
-  ExclamationTriangleIcon,
-  CheckCircleIcon,
-  XMarkIcon,
-  StarIcon,
   ArrowRightIcon
 } from '@heroicons/react/24/outline';
 import { 
@@ -224,22 +218,7 @@ const EnhancedLecturerDashboard: React.FC = () => {
               {formatDate(currentTime)} • {formatTime(currentTime)}
             </p>
           </div>
-          <div className="flex items-center space-x-4">
-            <button className="relative p-3 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-              <BellIcon className="h-6 w-6 text-gray-600" />
-              {(dashboardData?.overview.pendingGrading || 0) > 0 && (
-                <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 rounded-full flex items-center justify-center text-xs text-white">
-                  {dashboardData?.overview.pendingGrading}
-                </span>
-              )}
-            </button>
-            <Link to="/courses/create">
-              <button className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center space-x-2">
-                <PlusIcon className="h-5 w-5" />
-                <span>Buat Konten</span>
-              </button>
-            </Link>
-          </div>
+          {/* BAGIAN TOMBOL "BUAT KONTEN" DAN "NOTIFIKASI" DIHAPUS DARI SINI */}
         </div>
       </div>
 
@@ -559,12 +538,6 @@ const EnhancedLecturerDashboard: React.FC = () => {
       <div className="mt-8 bg-white rounded-2xl shadow-lg p-6">
         <h2 className="text-lg font-bold text-gray-900 mb-4">Quick Actions</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Link to="/courses/create">
-            <button className="flex flex-col items-center space-y-2 p-4 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
-              <PlusIcon className="h-8 w-8 text-blue-600" />
-              <span className="text-sm font-medium text-gray-900">Buat Course</span>
-            </button>
-          </Link>
           <Link to="/assignments/create">
             <button className="flex flex-col items-center space-y-2 p-4 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
               <DocumentTextIcon className="h-8 w-8 text-green-600" />

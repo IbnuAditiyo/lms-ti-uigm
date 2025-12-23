@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { EyeIcon, EyeSlashIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '../../contexts/AuthContext';
 import { LoginRequest } from '../../types';
@@ -34,7 +34,6 @@ const LoginPage: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-primary-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          {/* --- BAGIAN INI SAJA YANG DIUBAH (ICON -> LOGO IMAGE) --- */}
           <div className="mx-auto flex justify-center">
             {/* Pastikan file 'logo-univ.png' ada di folder public */}
             <img 
@@ -54,7 +53,6 @@ const LoginPage: React.FC = () => {
               <AcademicCapIcon className="h-10 w-10 text-primary-600" />
             </div>
           </div>
-          {/* --- BATAS PERUBAHAN --- */}
 
           <h2 className="mt-6 text-center text-3xl font-extrabold text-primary-900">
             Masuk ke LMS TI UIGM
@@ -112,28 +110,7 @@ const LoginPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded cursor-pointer"
-              />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                Ingat saya
-              </label>
-            </div>
-
-            <div className="text-sm">
-              <Link
-                to="/forgot-password"
-                className="font-medium text-primary-600 hover:text-secondary-600 transition-colors"
-              >
-                Lupa password?
-              </Link>
-            </div>
-          </div>
+          {/* Bagian 'Ingat saya' dan 'Lupa password' telah dihapus */}
 
           <Button
             type="submit"

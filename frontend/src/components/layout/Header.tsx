@@ -4,8 +4,8 @@ import {
   Bars3Icon,
   BellIcon,
   UserCircleIcon,
-  Cog6ToothIcon,
   ArrowRightOnRectangleIcon,
+  // Cog6ToothIcon dihapus
 } from '@heroicons/react/24/outline';
 import { useAuth } from '../../contexts/AuthContext';
 import { useQuery } from 'react-query';
@@ -179,17 +179,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
                     )}
                   </Menu.Item>
                   
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Link
-                        to="/settings"
-                        className={`${active ? 'bg-primary-50 text-primary-700' : 'text-gray-700'} flex items-center px-4 py-2 text-sm transition-colors`}
-                      >
-                        <Cog6ToothIcon className={`mr-3 h-5 w-5 ${active ? 'text-secondary-500' : 'text-secondary-400'}`} />
-                        Pengaturan
-                      </Link>
-                    )}
-                  </Menu.Item>
+                  {/* Item Pengaturan TELAH DIHAPUS dari sini */}
                   
                   <div className="border-t border-gray-100 my-1"></div>
                   

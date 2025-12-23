@@ -75,7 +75,7 @@ const adminNavigation: NavigationItem[] = [
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const location = useLocation();
-  const { user } = useAuth(); // Pastikan ada fungsi logout dari context
+  const { user, logout } = useAuth();
 
   const isActiveLink = (href: string) => {
     if (href === '/dashboard') {
@@ -231,8 +231,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </p>
           </div>
           <button
-            onClick={() => console.log('Logout clicked')}
+            onClick={() => logout()} // <--- GANTI JADI INI
             className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            title="Keluar"
           >
             <ArrowRightOnRectangleIcon className="h-5 w-5" />
           </button>
