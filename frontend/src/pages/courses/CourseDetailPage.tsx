@@ -522,7 +522,24 @@ const CourseDetailPage: React.FC = () => {
     if (material.filePath) {
       // Static files are served directly from backend root, not through /api prefix
       const baseUrl = (process.env.REACT_APP_API_URL || 'http://203.194.113.5:3000/api').replace('/api', '');
-      return `${baseUrl}/${material.filePath}`;
+      
+      // 👇 PERBAIKAN DI SINI: Normalisasi path
+      let cleanPath = material.filePath;
+      
+      // 1. Hapus prefix 'course-materials/' jika ada (dari data lama)
+      cleanPath = cleanPath.replace('course-materials/', '');
+      
+      // 2. Hapus prefix 'uploads/' jika ada (supaya tidak double nanti)
+      cleanPath = cleanPath.replace(/^uploads[\\/]/, '');
+      
+      // 3. Ubah backslash Windows (\) menjadi forward slash (/)
+      cleanPath = cleanPath.replace(/\\/g, '/');
+      
+      // 4. Pastikan path bersih (tidak ada slash di awal)
+      if (cleanPath.startsWith('/')) cleanPath = cleanPath.substring(1);
+
+      // Return URL yang konsisten mengarah ke /uploads/
+      return `${baseUrl}/uploads/${cleanPath}`;
     }
     
     return '#';

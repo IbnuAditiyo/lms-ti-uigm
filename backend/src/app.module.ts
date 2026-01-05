@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-// import { ServeStaticModule } from '@nestjs/serve-static';
+import { ServeStaticModule } from '@nestjs/serve-static'; // 👈 1. Hapus tanda komentar (uncomment) ini
 import { join } from 'path';
 
 // Modules
@@ -26,9 +26,11 @@ import { AttendanceModule } from './attendance/attendance.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '..', 'uploads'),
-    // }),
+    // 👇 2. Hapus tanda komentar pada blok ini untuk mengaktifkan akses file publik
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), 'uploads'), 
+      serveRoot: '/uploads',
+    }),
     DatabaseModule,
     AuthModule,
     UsersModule,
@@ -41,9 +43,8 @@ import { AttendanceModule } from './attendance/attendance.module';
     HealthModule,
     AdminModule,
     
-    // ✨ NEW: Video progress tracking and attendance modules
-    AttendanceModule,      // Register first (no dependencies)
-    VideoProgressModule,   // Register second (depends on AttendanceModule)
+    AttendanceModule,
+    VideoProgressModule,
   ],
 })
 export class AppModule {}
