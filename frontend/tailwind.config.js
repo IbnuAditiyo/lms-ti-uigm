@@ -6,10 +6,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        border: "hsl(214.3 31.8% 91.4%)", // Tetap neutral untuk border
-        background: "hsl(0 0% 100%)",
+        border: "hsl(214.3 31.8% 91.4%)",
+        background: "#F8FAFC", // Background sedikit lebih abu (Slate-50) agar kartu putih menonjol
         foreground: "hsl(222.2 84% 4.9%)",
-        ring: "hsl(161 94% 30%)", // Update ke nuansa Emerald
+        ring: "hsl(161 94% 30%)",
+        // --- WARNA EMERALD & GOLD ANDA TETAP DISINI ---
         primary: {
           50: '#ecfdf5',
           100: '#d1fae5',
@@ -20,8 +21,8 @@ module.exports = {
           600: '#059669',
           700: '#047857',
           800: '#065f46',
-          900: '#064e3b', // Deep Emerald
-          DEFAULT: '#059669', // Base color
+          900: '#064e3b', 
+          DEFAULT: '#059669',
           foreground: '#ffffff',
         },
         secondary: {
@@ -34,19 +35,25 @@ module.exports = {
           600: '#d97706',
           700: '#b45309',
           800: '#92400e',
-          900: '#78350f', // Deep Gold/Bronze
-          DEFAULT: '#d97706', // Gold base
+          900: '#78350f',
+          DEFAULT: '#d97706',
           foreground: '#ffffff',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        // GANTI KE FONT BARU
+        sans: ['"Plus Jakarta Sans"', 'sans-serif'], 
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "1.2rem", // Lebih bulat drastis
+        md: "0.8rem",
+        sm: "0.5rem",
       },
+      boxShadow: {
+        // Shadow halus modern (elevation)
+        'soft': '0 10px 40px -10px rgba(0,0,0,0.05)',
+        'nav': '0 2px 10px rgba(0,0,0,0.03)',
+      }
     },
   },
   plugins: [],
