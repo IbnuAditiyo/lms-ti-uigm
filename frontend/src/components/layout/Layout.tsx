@@ -1,69 +1,45 @@
 import React, { useState } from 'react';
-import Sidebar from './Sidebar';
-import Header from './Header';
+import TopNavbar from './TopNavbar';
+// import Sidebar from './Sidebar'; // HAPUS ATAU KOMENTAR INI
+// import Header from './Header';   // HAPUS ATAU KOMENTAR INI
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Sidebar */}
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+    <div className="min-h-screen bg-[#F8FAFC]"> {/* Background Abu Terang Modern */}
       
-      {/* WRAPPER UTAMA:
-         Ditambahkan 'flex flex-col min-h-screen' agar footer selalu di bawah (sticky).
-      */}
-      <div className="flex flex-col min-h-screen md:ml-64 transition-all duration-300">
-        
-        {/* Header */}
-        <Header onMenuClick={() => setSidebarOpen(true)} />
-        
-        {/* MAIN CONTENT:
-           Ubah 'min-h-screen' jadi 'flex-1' agar tidak mendorong footer terlalu jauh 
-           sampai keluar layar kalau kontennya sedikit.
-        */}
-        <main className="flex-1 bg-gray-50 p-6 lg:p-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 min-h-[calc(100vh-8rem)]">
-              <div className="p-6">
-                {children}
-              </div>
-            </div>
-          </div>
-        </main>
+      {/* GANTI SIDEBAR & HEADER LAMA DENGAN TOPNAVBAR */}
+      <TopNavbar onMobileMenuToggle={() => setMobileMenuOpen(true)} />
 
-        {/* --- FOOTER FIX (BRANDING TI UIGM) --- */}
-        <footer className="mt-auto border-t border-gray-200 bg-white py-6">
-          <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 md:flex-row">
-            
-            {/* Kiri: Copyright & Identitas Prodi */}
-            <div className="text-center md:text-left">
-              <p className="text-sm text-gray-500">
-                &copy; {new Date().getFullYear()} <span className="font-semibold text-primary-600">Teknik Informatika</span>
-              </p>
-              <p className="text-xs text-gray-400 mt-0.5">
-                Universitas Indo Global Mandiri
-              </p>
-            </div>
+      {/* MOBILE MENU DRAWER (Opsional, simpel saja untuk layout ini) */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-50 bg-gray-900/50 md:hidden" onClick={() => setMobileMenuOpen(false)}>
+           <div className="absolute right-0 top-0 h-full w-64 bg-white p-6 shadow-xl" onClick={e => e.stopPropagation()}>
+              <h2 className="text-lg font-bold mb-6">Menu</h2>
+              {/* List menu mobile bisa ditaruh di sini jika perlu */}
+           </div>
+        </div>
+      )}
+      
+      {/* MAIN CONTENT WRAPPER */}
+      {/* Hapus margin-left (ml-64) karena tidak ada sidebar lagi */}
+      <main className="py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto space-y-8">
+           {children}
+        </div>
+      </main>
 
-            {/* Kanan: Link Bantuan */}
-            <div className="flex items-center gap-6">
-              <a href="#" className="text-xs font-medium text-gray-500 hover:text-primary-600 transition-colors">
-                Bantuan
-              </a>
-              <a href="#" className="text-xs font-medium text-gray-500 hover:text-primary-600 transition-colors">
-                Kebijakan Privasi
-              </a>
-            </div>
-            
-          </div>
-        </footer>
-
-      </div>
+      {/* FOOTER */}
+      <footer className="py-8 text-center border-t border-gray-200 mt-auto">
+         <p className="text-sm text-gray-400 font-medium">
+           &copy; {new Date().getFullYear()} LMS Teknik Informatika UIGM
+         </p>
+      </footer>
     </div>
   );
 };
