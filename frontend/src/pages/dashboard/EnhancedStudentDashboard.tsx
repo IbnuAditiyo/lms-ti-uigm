@@ -7,7 +7,6 @@ import {
   ChatBubbleLeftIcon,
   BellIcon,
   ClockIcon,
-  CalendarIcon,
   AcademicCapIcon,
   ChartBarIcon,
   TrophyIcon,
@@ -16,7 +15,6 @@ import {
   ArrowTrendingDownIcon
 } from '@heroicons/react/24/outline';
 import { Card } from '../../components/ui/Card';
-import { Button } from '../../components/ui/Button';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import { ErrorMessage } from '../../components/ui/ErrorMessage';
 import { StatisticsChart, chartConfigs } from '../../components/charts/StatisticsChart';
@@ -80,11 +78,11 @@ const EnhancedStudentDashboard: React.FC = () => {
         : 0;
 
       // Calculate average grade (mock data for now)
-      const averageGrade = 85; // Mock average grade
+      const averageGrade = 3.85; // Mock IPK
 
-      // Mock data for demonstration (replace with real API data)
+      // Mock data for demonstration
       const totalStudyHours = 124;
-      const streakDays = 7;
+      const streakDays = 12;
       const learningProgress = [65, 70, 72, 78, 82, 85];
       const gradeDistribution = [12, 18, 8, 3, 1];
       const weeklyActivity = [8, 12, 10, 15, 9, 6, 4];
@@ -124,7 +122,7 @@ const EnhancedStudentDashboard: React.FC = () => {
       // Course progress data
       const courseProgress = courses.map(course => ({
         courseName: course.name,
-        progress: Math.floor(Math.random() * 100), // Mock data
+        progress: Math.floor(Math.random() * 40) + 60, // Mock data 60-100
         grade: ['A', 'A-', 'B+', 'B'][Math.floor(Math.random() * 4)]
       }));
 
@@ -132,7 +130,7 @@ const EnhancedStudentDashboard: React.FC = () => {
         enrolledCourses: courses.length,
         pendingAssignments,
         unreadNotifications: notifications.filter(n => !n.isRead).length,
-        activeDiscussions: forums.filter(f => !f.isLocked).length, // Fixed: use !isLocked instead of isActive
+        activeDiscussions: forums.filter(f => !f.isLocked).length,
         completionRate,
         averageGrade,
         totalStudyHours,
@@ -150,7 +148,6 @@ const EnhancedStudentDashboard: React.FC = () => {
     }
   );
 
-  // Chart data configurations
   const chartData = useMemo(() => {
     if (!stats) return null;
     
@@ -160,131 +157,121 @@ const EnhancedStudentDashboard: React.FC = () => {
       assignmentStatus: chartConfigs.assignmentStatus(
         stats.completionRate,
         stats.pendingAssignments,
-        Math.floor(stats.pendingAssignments * 0.2) // Mock overdue count
+        Math.floor(stats.pendingAssignments * 0.2)
       ),
       weeklyActivity: chartConfigs.weeklyActivity(stats.weeklyActivity)
     };
   }, [stats]);
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-96">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
-  }
-
-  if (error || !chartData) {
-    return <ErrorMessage message="Gagal memuat dashboard. Silakan coba lagi." />;
-  }
+  if (isLoading) return <div className="flex items-center justify-center h-96"><LoadingSpinner size="lg" /></div>;
+  if (error || !chartData) return <ErrorMessage message="Gagal memuat dashboard. Silakan coba lagi." />;
 
   return (
-    <div className="space-y-6">
-      {/* Header dengan Motivasi */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-lg p-8 text-white">
-        <div className="flex items-center justify-between">
+    <div className="space-y-8 pb-10">
+      
+      {/* 1. HERO BANNER (Updated to Emerald Gradient) */}
+      <div className="relative bg-gradient-to-br from-emerald-800 via-teal-700 to-emerald-900 rounded-3xl shadow-xl p-8 text-white overflow-hidden">
+        {/* Dekorasi Background */}
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-60 h-60 bg-yellow-400/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Dashboard Mahasiswa</h1>
-            <p className="text-blue-100 text-lg">
-              Selamat datang kembali! Anda sudah belajar {stats?.streakDays} hari berturut-turut 🔥
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/10 text-emerald-50 text-xs font-medium mb-3">
+               <FireIcon className="w-4 h-4 text-yellow-300" />
+               <span>On Fire!</span>
+            </div>
+            <h1 className="text-3xl font-bold mb-2 tracking-tight">Dashboard Akademik</h1>
+            <p className="text-emerald-100 text-lg max-w-xl">
+              Selamat datang kembali! Kamu sudah mempertahankan streak belajar selama <span className="font-bold text-white border-b border-yellow-400">{stats?.streakDays} hari</span>. Pertahankan!
             </p>
           </div>
-          <div className="hidden lg:flex items-center space-x-8">
-            <div className="text-center">
-              <div className="flex items-center justify-center mb-2">
-                <FireIcon className="h-8 w-8 text-yellow-300" />
-              </div>
-              <p className="text-2xl font-bold">{stats?.streakDays}</p>
-              <p className="text-sm text-blue-100">Hari Streak</p>
+          
+          <div className="flex gap-4">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 text-center min-w-[100px]">
+               <TrophyIcon className="h-8 w-8 text-yellow-300 mx-auto mb-2" />
+               <p className="text-2xl font-bold">{stats?.averageGrade}</p>
+               <p className="text-xs text-emerald-200 uppercase tracking-wide">IPK</p>
             </div>
-            <div className="text-center">
-              <div className="flex items-center justify-center mb-2">
-                <TrophyIcon className="h-8 w-8 text-yellow-300" />
-              </div>
-              <p className="text-2xl font-bold">{stats?.averageGrade || 0}</p>
-              <p className="text-sm text-blue-100">Rata-rata Nilai</p>
-            </div>
-            <div className="text-center">
-              <div className="flex items-center justify-center mb-2">
-                <ClockIcon className="h-8 w-8 text-yellow-300" />
-              </div>
-              <p className="text-2xl font-bold">{stats?.totalStudyHours}</p>
-              <p className="text-sm text-blue-100">Jam Belajar</p>
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 text-center min-w-[100px]">
+               <ClockIcon className="h-8 w-8 text-blue-300 mx-auto mb-2" />
+               <p className="text-2xl font-bold">{stats?.totalStudyHours}h</p>
+               <p className="text-xs text-emerald-200 uppercase tracking-wide">Fokus</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Enhanced Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="p-6 hover:shadow-lg transition-all duration-300 border-l-4 border-blue-500">
+      {/* 2. STATS GRID (Updated Colors & Border) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Card 1: Courses */}
+        <Card className="p-6 hover:shadow-lg transition-all duration-300 border-t-4 border-emerald-500 relative overflow-hidden group">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Mata Kuliah</p>
-              <p className="text-3xl font-bold text-gray-900 mt-1">{stats?.enrolledCourses || 0}</p>
-              <div className="flex items-center mt-2">
-                <ArrowTrendingUpIcon className="h-4 w-4 text-green-500 mr-1" />
-                <span className="text-sm text-green-600">+2 bulan ini</span>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Mata Kuliah</p>
+              <p className="text-3xl font-bold text-gray-800 mt-2">{stats?.enrolledCourses || 0}</p>
+              <div className="flex items-center mt-2 text-xs font-medium text-emerald-600 bg-emerald-50 w-fit px-2 py-0.5 rounded-full">
+                <ArrowTrendingUpIcon className="h-3 w-3 mr-1" /> +2 SKS
               </div>
             </div>
-            <div className="p-3 bg-blue-100 rounded-full">
-              <BookOpenIcon className="h-8 w-8 text-blue-600" />
+            <div className="p-3 bg-emerald-50 rounded-2xl text-emerald-600 group-hover:scale-110 transition-transform">
+              <BookOpenIcon className="h-8 w-8" />
             </div>
           </div>
         </Card>
 
-        <Card className="p-6 hover:shadow-lg transition-all duration-300 border-l-4 border-yellow-500">
+        {/* Card 2: Pending Tasks */}
+        <Card className="p-6 hover:shadow-lg transition-all duration-300 border-t-4 border-yellow-500 relative overflow-hidden group">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Tugas Pending</p>
-              <p className="text-3xl font-bold text-gray-900 mt-1">{stats?.pendingAssignments || 0}</p>
-              <div className="flex items-center mt-2">
-                <ArrowTrendingDownIcon className="h-4 w-4 text-red-500 mr-1" />
-                <span className="text-sm text-red-600">-3 dari minggu lalu</span>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Tugas Pending</p>
+              <p className="text-3xl font-bold text-gray-800 mt-2">{stats?.pendingAssignments || 0}</p>
+              <div className="flex items-center mt-2 text-xs font-medium text-yellow-600 bg-yellow-50 w-fit px-2 py-0.5 rounded-full">
+                <ArrowTrendingDownIcon className="h-3 w-3 mr-1" /> -1 dari kemarin
               </div>
             </div>
-            <div className="p-3 bg-yellow-100 rounded-full">
-              <ClipboardDocumentListIcon className="h-8 w-8 text-yellow-600" />
+            <div className="p-3 bg-yellow-50 rounded-2xl text-yellow-600 group-hover:scale-110 transition-transform">
+              <ClipboardDocumentListIcon className="h-8 w-8" />
             </div>
           </div>
         </Card>
 
-        <Card className="p-6 hover:shadow-lg transition-all duration-300 border-l-4 border-red-500">
+        {/* Card 3: Notifications */}
+        <Card className="p-6 hover:shadow-lg transition-all duration-300 border-t-4 border-red-500 relative overflow-hidden group">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Notifikasi Baru</p>
-              <p className="text-3xl font-bold text-gray-900 mt-1">{stats?.unreadNotifications || 0}</p>
-              <div className="flex items-center mt-2">
-                <span className="text-sm text-gray-500">Perlu perhatian</span>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Pesan Baru</p>
+              <p className="text-3xl font-bold text-gray-800 mt-2">{stats?.unreadNotifications || 0}</p>
+              <div className="flex items-center mt-2 text-xs font-medium text-red-600 bg-red-50 w-fit px-2 py-0.5 rounded-full">
+                 Perlu Cek
               </div>
             </div>
-            <div className="p-3 bg-red-100 rounded-full">
-              <BellIcon className="h-8 w-8 text-red-600" />
+            <div className="p-3 bg-red-50 rounded-2xl text-red-600 group-hover:scale-110 transition-transform">
+              <BellIcon className="h-8 w-8" />
             </div>
           </div>
         </Card>
 
-        <Card className="p-6 hover:shadow-lg transition-all duration-300 border-l-4 border-green-500">
-          <div className="flex items-center justify-between">
+        {/* Card 4: Progress */}
+        <Card className="p-6 hover:shadow-lg transition-all duration-300 border-t-4 border-blue-500 relative overflow-hidden group">
+          <div className="flex items-center justify-between mb-3">
             <div>
-              <p className="text-sm font-medium text-gray-600">Progress Semester</p>
-              <p className="text-3xl font-bold text-gray-900 mt-1">{stats?.completionRate || 0}%</p>
-              <div className="mt-2">
-                <ProgressBar value={stats?.completionRate || 0} className="h-2" />
-              </div>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Semester</p>
+              <p className="text-3xl font-bold text-gray-800 mt-2">{stats?.completionRate || 0}%</p>
             </div>
-            <div className="p-3 bg-green-100 rounded-full">
-              <ChartBarIcon className="h-8 w-8 text-green-600" />
+            <div className="p-3 bg-blue-50 rounded-2xl text-blue-600 group-hover:scale-110 transition-transform">
+              <ChartBarIcon className="h-8 w-8" />
             </div>
           </div>
+          <ProgressBar value={stats?.completionRate || 0} className="h-1.5" />
         </Card>
       </div>
 
-      {/* Charts Section */}
+      {/* 3. CHARTS SECTION */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <StatisticsChart
           type="line"
-          title="Progress Pembelajaran 6 Bulan Terakhir"
+          title="Analisis Pembelajaran"
           data={chartData.learningProgress}
           height={300}
         />
@@ -296,23 +283,26 @@ const EnhancedStudentDashboard: React.FC = () => {
         />
       </div>
 
+      {/* 4. DETAILS GRID */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Course Progress */}
         <div className="lg:col-span-1">
-          <Card>
-            <div className="p-6 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900">Progress Mata Kuliah</h2>
+          <Card className="h-full">
+            <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+              <h2 className="font-bold text-gray-800">Progress Matkul</h2>
+              <span className="text-xs text-gray-400">Semester Ini</span>
             </div>
-            <div className="p-6 space-y-4">
+            <div className="p-6 space-y-5">
               {stats?.courseProgress.map((course, index) => (
                 <div key={index} className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-gray-700">{course.courseName}</span>
-                    <span className="text-sm font-bold text-gray-900">{course.grade}</span>
+                    <span className={`text-xs font-bold px-2 py-0.5 rounded ${
+                        course.grade.startsWith('A') ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'
+                    }`}>{course.grade}</span>
                   </div>
                   <div className="relative">
                     <ProgressBar value={course.progress} className="h-2" />
-                    <span className="absolute right-0 -top-5 text-xs text-gray-500">{course.progress}%</span>
                   </div>
                 </div>
               ))}
@@ -320,7 +310,7 @@ const EnhancedStudentDashboard: React.FC = () => {
           </Card>
         </div>
 
-        {/* Weekly Activity */}
+        {/* Weekly Activity Chart */}
         <div className="lg:col-span-1">
           <StatisticsChart
             type="bar"
@@ -330,7 +320,7 @@ const EnhancedStudentDashboard: React.FC = () => {
           />
         </div>
 
-        {/* Assignment Status */}
+        {/* Assignment Status Doughnut */}
         <div className="lg:col-span-1">
           <StatisticsChart
             type="doughnut"
@@ -341,127 +331,82 @@ const EnhancedStudentDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Deadlines and Activities */}
+      {/* 5. DEADLINES & ACTIVITY */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
         {/* Upcoming Deadlines */}
         <div className="lg:col-span-2">
-          <Card>
-            <div className="p-6 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-gray-900">Deadline Mendatang</h2>
-                <ClockIcon className="h-5 w-5 text-gray-400" />
-              </div>
+          <Card className="border-none shadow-md">
+            <div className="p-6 border-b border-gray-50 flex items-center gap-2">
+               <div className="h-6 w-1 bg-red-500 rounded-full"></div>
+               <h2 className="font-bold text-gray-800">Deadline Mendatang</h2>
             </div>
-            <div className="p-6">
+            <div className="p-6 space-y-3">
               {stats?.upcomingDeadlines && stats.upcomingDeadlines.length > 0 ? (
-                <div className="space-y-4">
-                  {stats.upcomingDeadlines.map((deadline) => (
-                    <div key={deadline.id} className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg hover:shadow-md transition-all duration-300">
-                      <div className="flex-1">
-                        <h3 className="font-medium text-gray-900">{deadline.title}</h3>
-                        <p className="text-sm text-gray-500">{deadline.courseName}</p>
-                      </div>
-                      <div className="flex items-center space-x-4">
-                        <div className="text-right">
-                          <p className="text-sm font-medium text-gray-900">
-                            {formatDate(deadline.dueDate, 'short')}
-                          </p>
-                          <p className={`text-xs font-semibold ${
-                            deadline.status === 'urgent' ? 'text-red-600' :
-                            deadline.status === 'warning' ? 'text-yellow-600' :
-                            'text-green-600'
-                          }`}>
-                            {deadline.status === 'urgent' ? '⚠️ Segera!' :
-                             deadline.status === 'warning' ? '⏰ Mendekat' :
-                             '✅ Masih ada waktu'}
-                          </p>
+                stats.upcomingDeadlines.map((deadline) => (
+                  <div key={deadline.id} className="group flex items-center justify-between p-4 bg-white border border-gray-100 rounded-xl hover:border-emerald-300 hover:shadow-sm transition-all duration-300 cursor-pointer">
+                    <div className="flex items-center gap-4">
+                        <div className={`flex flex-col items-center justify-center w-12 h-12 rounded-lg border ${
+                            deadline.status === 'urgent' ? 'bg-red-50 border-red-100 text-red-600' : 'bg-gray-50 border-gray-100 text-gray-500'
+                        }`}>
+                            <span className="text-[10px] font-bold uppercase">{new Date(deadline.dueDate).toLocaleString('id-ID', { month: 'short' })}</span>
+                            <span className="text-lg font-bold leading-none">{new Date(deadline.dueDate).getDate()}</span>
                         </div>
-                        <Link 
-                          to={`/assignments/${deadline.id}`}
-                          className="p-2 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
-                        >
-                          <svg className="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
-                        </Link>
-                      </div>
+                        <div>
+                           <h3 className="font-bold text-gray-800 group-hover:text-emerald-700 transition-colors">{deadline.title}</h3>
+                           <p className="text-xs text-gray-500">{deadline.courseName}</p>
+                        </div>
                     </div>
-                  ))}
-                </div>
+                    
+                    <div className="text-right">
+                       <p className="text-xs font-bold text-gray-400 mb-1">{new Date(deadline.dueDate).toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'})} WIB</p>
+                       <span className={`text-[10px] px-2 py-1 rounded-full font-bold uppercase ${
+                          deadline.status === 'urgent' ? 'bg-red-100 text-red-600' : 
+                          deadline.status === 'warning' ? 'bg-yellow-100 text-yellow-600' : 'bg-green-100 text-green-600'
+                       }`}>
+                          {deadline.status}
+                       </span>
+                    </div>
+                  </div>
+                ))
               ) : (
-                <div className="text-center py-8">
-                  <AcademicCapIcon className="mx-auto h-12 w-12 text-gray-300" />
-                  <p className="mt-2 text-sm text-gray-500">Tidak ada deadline dalam waktu dekat</p>
-                  <p className="text-xs text-gray-400 mt-1">Tetap semangat belajar! 💪</p>
+                <div className="text-center py-10">
+                  <p className="text-gray-400 text-sm">Tidak ada deadline dekat.</p>
                 </div>
               )}
             </div>
           </Card>
         </div>
 
-        {/* Recent Activities */}
+        {/* Quick Actions */}
         <div>
-          <Card>
-            <div className="p-6 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900">Aktivitas Terbaru</h2>
+          <Card className="h-full border-none shadow-md bg-gradient-to-b from-white to-gray-50">
+            <div className="p-6 border-b border-gray-50 flex items-center gap-2">
+               <div className="h-6 w-1 bg-emerald-500 rounded-full"></div>
+               <h2 className="font-bold text-gray-800">Aksi Cepat</h2>
             </div>
-            <div className="p-6">
-              {stats?.recentActivities && stats.recentActivities.length > 0 ? (
-                <div className="space-y-4">
-                  {stats.recentActivities.map((activity) => (
-                    <div key={activity.id} className="flex space-x-3 hover:bg-gray-50 p-2 rounded-lg transition-colors duration-200">
-                      <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
-                        activity.type === 'assignment' ? 'bg-gradient-to-br from-blue-400 to-blue-600' :
-                        activity.type === 'announcement' ? 'bg-gradient-to-br from-yellow-400 to-yellow-600' :
-                        activity.type === 'grade' ? 'bg-gradient-to-br from-green-400 to-green-600' :
-                        'bg-gradient-to-br from-purple-400 to-purple-600'
-                      }`}>
-                        {activity.type === 'assignment' && <ClipboardDocumentListIcon className="h-5 w-5 text-white" />}
-                        {activity.type === 'announcement' && <BellIcon className="h-5 w-5 text-white" />}
-                        {activity.type === 'grade' && <ChartBarIcon className="h-5 w-5 text-white" />}
-                        {activity.type === 'forum' && <ChatBubbleLeftIcon className="h-5 w-5 text-white" />}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900 truncate">{activity.title}</p>
-                        <p className="text-xs text-gray-500 truncate">{activity.description}</p>
-                        <p className="text-xs text-gray-400 mt-1">{formatDate(activity.timestamp, 'relative')}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-8">
-                  <ClockIcon className="mx-auto h-12 w-12 text-gray-300" />
-                  <p className="mt-2 text-sm text-gray-500">Belum ada aktivitas</p>
-                </div>
-              )}
+            <div className="p-6 grid grid-cols-2 gap-4">
+              <Link to="/assignments" className="flex flex-col items-center justify-center p-4 bg-white border border-gray-100 rounded-2xl shadow-sm hover:-translate-y-1 hover:shadow-md transition-all">
+                <div className="p-3 bg-blue-50 text-blue-600 rounded-full mb-2"><ClipboardDocumentListIcon className="h-6 w-6" /></div>
+                <span className="text-xs font-bold text-gray-600">Tugas</span>
+              </Link>
+              <Link to="/courses" className="flex flex-col items-center justify-center p-4 bg-white border border-gray-100 rounded-2xl shadow-sm hover:-translate-y-1 hover:shadow-md transition-all">
+                <div className="p-3 bg-emerald-50 text-emerald-600 rounded-full mb-2"><BookOpenIcon className="h-6 w-6" /></div>
+                <span className="text-xs font-bold text-gray-600">Materi</span>
+              </Link>
+              <Link to="/forums" className="flex flex-col items-center justify-center p-4 bg-white border border-gray-100 rounded-2xl shadow-sm hover:-translate-y-1 hover:shadow-md transition-all">
+                <div className="p-3 bg-purple-50 text-purple-600 rounded-full mb-2"><ChatBubbleLeftIcon className="h-6 w-6" /></div>
+                <span className="text-xs font-bold text-gray-600">Diskusi</span>
+              </Link>
+              <Link to="/announcements" className="flex flex-col items-center justify-center p-4 bg-white border border-gray-100 rounded-2xl shadow-sm hover:-translate-y-1 hover:shadow-md transition-all">
+                <div className="p-3 bg-yellow-50 text-yellow-600 rounded-full mb-2"><BellIcon className="h-6 w-6" /></div>
+                <span className="text-xs font-bold text-gray-600">Info</span>
+              </Link>
             </div>
           </Card>
         </div>
-      </div>
 
-      {/* Quick Actions */}
-      <Card className="p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Aksi Cepat</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Link to="/assignments" className="flex flex-col items-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors duration-200">
-            <ClipboardDocumentListIcon className="h-8 w-8 text-blue-600 mb-2" />
-            <span className="text-sm font-medium text-gray-700">Lihat Tugas</span>
-          </Link>
-          <Link to="/courses" className="flex flex-col items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors duration-200">
-            <BookOpenIcon className="h-8 w-8 text-green-600 mb-2" />
-            <span className="text-sm font-medium text-gray-700">Mata Kuliah</span>
-          </Link>
-          <Link to="/forums" className="flex flex-col items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors duration-200">
-            <ChatBubbleLeftIcon className="h-8 w-8 text-purple-600 mb-2" />
-            <span className="text-sm font-medium text-gray-700">Forum Diskusi</span>
-          </Link>
-          <Link to="/announcements" className="flex flex-col items-center p-4 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors duration-200">
-            <BellIcon className="h-8 w-8 text-yellow-600 mb-2" />
-            <span className="text-sm font-medium text-gray-700">Pengumuman</span>
-          </Link>
-        </div>
-      </Card>
+      </div>
     </div>
   );
 };
