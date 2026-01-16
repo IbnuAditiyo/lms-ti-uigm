@@ -124,9 +124,9 @@ Gunakan akun berikut untuk login dan menguji sistem:
 
 | Role | Email | Password |
 |------|-------|----------|
-| **Administrator** | `admin@uigm.ac.id` | `admin123` |
-| **Dosen** | `dosen@uigm.ac.id` | `lecturer123` |
-| **Mahasiswa** | `mahasiswa@student.uigm.ac.id` | `student123` |
+| **Administrator** | `adminti@uigm.ac.id` | `admin123` |
+| **Dosen** | `rendra@uigm.ac.id` | `rendra` |
+| **Mahasiswa** | `2022110081@students.uigm.ac.id` | `2022110081` |
 
 ---
 
