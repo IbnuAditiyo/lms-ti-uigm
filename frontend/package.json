@@ -1,7 +1,8 @@
 {
-  "name": "lms-frontend",
-  "version": "2.0.1",
-  "description": "Advanced LMS Frontend with React - Professional HCI Standards",
+  "name": "lms-ti-uigm-frontend",
+  "version": "1.0.0",
+  "description": "Platform LMS Modern untuk Prodi Teknik Informatika UIGM - Dikembangkan oleh PT. Indo Global Learning",
+  "author": "Ibnu Aditiyo - PT. Indo Global Learning",
   "private": true,
   "dependencies": {
     "@headlessui/react": "^1.7.17",

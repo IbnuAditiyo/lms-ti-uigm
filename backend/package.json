@@ -1,8 +1,8 @@
 {
-  "name": "lms-backend",
-  "version": "1.0.1",
-  "description": "LMS Backend with NestJS",
-  "author": "LMS Team",
+  "name": "lms-ti-uigm-backend",
+  "version": "1.0.0",
+  "description": "Backend Server untuk LMS TI UIGM - Dikembangkan oleh PT. Indo Global Learning",
+  "author": "Ibnu Aditiyo - PT. Indo Global Learning",
   "private": true,
   "scripts": {
     "build": "nest build",

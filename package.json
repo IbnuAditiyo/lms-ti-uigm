@@ -1,7 +1,7 @@
 {
-  "name": "lms-universitas-v1",
+  "name": "lms-ti-uigm",
   "version": "1.0.0",
-  "description": "Learning Management System untuk Universitas dengan NestJS, React, dan PostgreSQL",
+  "description": "Sistem Manajemen Pembelajaran (LMS) Modern untuk Prodi Teknik Informatika UIGM",
   "main": "index.js",
   "scripts": {
     "setup": "./scripts/setup.sh",
@@ -22,31 +22,30 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HaikalE/lms-universitas-v1.git"
+    "url": "git+https://github.com/ibnuaditiyo/lms-ti-uigm.git"
   },
   "keywords": [
     "lms",
-    "learning-management-system",
+    "uigm",
+    "elearning",
     "education",
     "university",
     "nestjs",
     "react",
     "typescript",
     "postgresql",
-    "tailwindcss",
-    "jwt",
-    "typeorm"
+    "tailwindcss"
   ],
   "author": {
-    "name": "LMS Team",
-    "email": "team@lms-universitas.dev",
-    "url": "https://github.com/HaikalE"
+    "name": "Ibnu Aditiyo - PT. Indo Global Learning",
+    "email": "ibnu.2022110081@student.uigm.ac.id",
+    "url": "https://github.com/ibnuaditiyo"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/HaikalE/lms-universitas-v1/issues"
+    "url": "https://github.com/ibnuaditiyo/lms-ti-uigm/issues"
   },
-  "homepage": "https://github.com/HaikalE/lms-universitas-v1#readme",
+  "homepage": "https://github.com/ibnuaditiyo/lms-ti-uigm#readme",
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=8.0.0"
